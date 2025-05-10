@@ -1,9 +1,9 @@
-package com.estudo.senderemail.application.service.userservice.facade;
+package com.estudo.senderemail.application.facede;
 
 import com.estudo.senderemail.application.dto.Request.CreateUserRequest;
 import com.estudo.senderemail.application.dto.Response.UserResponse;
-import com.estudo.senderemail.application.service.userservice.usecase.CreateUserUseCase;
-import com.estudo.senderemail.application.service.userservice.usecase.GetUsersUseCase;
+import com.estudo.senderemail.application.usecase.user.CreateUserUseCase;
+import com.estudo.senderemail.application.usecase.user.GetUsersUseCase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

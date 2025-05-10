@@ -17,7 +17,6 @@ public class UserCreatedEventPublisher {
         try {
             rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, user);
         } catch (Exception e) {
-         
             System.err.println("Failed to publish user created event: " + e.getMessage());
         }
     }

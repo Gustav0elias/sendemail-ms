@@ -1,9 +1,9 @@
-package com.estudo.senderemail.application.service.userservice.usecase.impl;
+package com.estudo.senderemail.application.usecase.user.impl;
 
 import com.estudo.senderemail.application.dto.Request.CreateUserRequest;
 import com.estudo.senderemail.application.dto.Response.UserResponse;
 import com.estudo.senderemail.application.mapper.UserMapper;
-import com.estudo.senderemail.application.service.userservice.usecase.CreateUserUseCase;
+import com.estudo.senderemail.application.usecase.user.CreateUserUseCase;
 import com.estudo.senderemail.domain.entity.User;
 import com.estudo.senderemail.domain.repository.UserRepository;
 import com.estudo.senderemail.infrastructure.messaging.UserCreatedEventPublisher;
@@ -17,7 +17,6 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
     private final UserRepository userRepository;
     private final UserCreatedEventPublisher eventPublisher;
-    private final UserMapper userMapper;
 
     @Override
     @Transactional
@@ -25,9 +24,13 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
-        var user = userMapper.toEntity(request);
+
+        var user = UserMapper.INSTANCE.toEntity(request);
+
         User savedUser = userRepository.save(user);
+
         eventPublisher.publishUserCreatedEvent(savedUser);
-        return userMapper.toDto(savedUser);
+
+        return UserMapper.INSTANCE.toDto(savedUser);
     }
 } 
