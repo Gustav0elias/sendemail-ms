@@ -28,9 +28,9 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         var user = UserMapper.INSTANCE.toEntity(request);
 
         User savedUser = userRepository.save(user);
+        UserResponse response = UserMapper.INSTANCE.toDto(savedUser);
+        eventPublisher.publishUserCreatedEvent(response);
 
-        eventPublisher.publishUserCreatedEvent(savedUser);
-
-        return UserMapper.INSTANCE.toDto(savedUser);
+        return response;
     }
 } 

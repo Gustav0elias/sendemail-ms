@@ -1,6 +1,7 @@
 package com.estudo.senderemail.infrastructure.messaging;
 
-import com.estudo.senderemail.domain.entity.User;
+import com.estudo.senderemail.application.dto.Response.UserResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public class UserCreatedEventPublisher {
     private static final String EXCHANGE = "user.events";
     private static final String ROUTING_KEY = "user.created";
 
-    public void publishUserCreatedEvent(User user) {
+    public void publishUserCreatedEvent(UserResponse user) {
         try {
             rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, user);
         } catch (Exception e) {
